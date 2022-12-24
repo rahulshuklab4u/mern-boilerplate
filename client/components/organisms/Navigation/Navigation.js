@@ -38,6 +38,10 @@ export default function Navigation() {
     ? pathname === '/settings'
     : R.slice(0, 10, pathname) === '/settings/';
 
+  const isWallPapers = (pathname.length === 11)
+    ? pathname === '/wallpapers'
+    : R.slice(0, 10, pathname) === '/wallpapers/';
+
   return (
     <Navbar fixed="top" shadow>
       <Container>
@@ -113,6 +117,17 @@ export default function Navigation() {
               >
                 <Title size="6">
                   Todo
+                </Title>
+              </Navbar.Item>
+              <Navbar.Item
+                className="is-hidden-mobile"
+                to="/wallpapers"
+                active={isWallPapers}
+                tab
+                component={Link}
+              >
+                <Title size="6">
+                  WallPapers
                 </Title>
               </Navbar.Item>
               <Navbar.Item

@@ -13,6 +13,7 @@ import HomePage from '_components/pages/HomePage';
 import TodoPage from '_components/pages/TodoPage';
 import SettingsPage from '_components/pages/SettingsPage';
 import LostPage from '_components/pages/LostPage';
+import WallPaperPage from '_components/pages/WallPaperPage';
 
 import Navigation from '_components/organisms/Navigation';
 import Footer from '_components/organisms/Footer';
@@ -49,6 +50,7 @@ export default function Main() {
           <Route path="register" element={<RegisterPage />} />
           <Route path="home" element={<HomePage />} />
           <Route path="todo" element={<TodoPage />} />
+          <Route path="wallpapers" element={<WallPaperPage />} />
           <Route path="settings/*" element={<SettingsPage />} />
           <Route path="*" element={<LostPage />} />
         </Routes>
