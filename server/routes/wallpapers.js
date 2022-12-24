@@ -15,11 +15,13 @@ module.exports = router;
 router.post('/', requireAuth, async(req, res) => {
   try {
 
+    const prompt = `${req.body.text}`;
+
     const body = {
-      prompt: req.body && req.body.text,
+      prompt,
       model: 'image-alpha-001',
-      num_images: 4,
-      size: '256x256',
+      num_images: 1,
+      size: `${req.body.size}`,
     };
     const response = await openai.createImage(body);
     console.log('###response.data', response.data);

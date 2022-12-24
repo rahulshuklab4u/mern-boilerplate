@@ -1,16 +1,16 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { push } from 'redux-first-history';
 import R from 'ramda';
 
-import { updateWallpaperText } from '_store/actions/wallpapers';
 import {  attemptFetchWallPaper } from '_store/thunks/wallpapers';
 
 export default function WallPaperPage() {
   const dispatch = useDispatch();
-  const text = useSelector((state) => state.wallpapers && state.wallpapers.wallPaperText);
   const wallpaperUrl = useSelector((state) => state.wallpapers && state.wallpapers.wallpaperUrl);
   const { user } = useSelector(R.pick(['user']));
+  const [text, setText] = useState('');
+  const [size, setSize] = useState('256x256');
 
   useEffect(() => {
     if (R.isEmpty(user)) {
@@ -19,14 +19,17 @@ export default function WallPaperPage() {
   }, [dispatch, user]);
 
   const handleTextChange = (event) => {
-    dispatch(updateWallpaperText(event.target.value));
+    setText(event.target.value);
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
     // Dispatch an action to fetch the wallpaper from the DALL-E API
-    dispatch(attemptFetchWallPaper(text));
-    // setLoading(false);
+    dispatch(attemptFetchWallPaper(text, size));
+  };
+
+  const handleSizeChange = (event) => {
+    setSize(event.target.value);
   };
 
   return (
@@ -37,6 +40,17 @@ export default function WallPaperPage() {
           <input type="text" value={text} onChange={handleTextChange} />
         </label>
         <br />
+        <br />
+        <label>
+          Size:
+          <select value={size} onChange={handleSizeChange}>
+            <option value="256x256">256x256</option>
+            <option value="512x512">512x512</option>
+            <option value="1024x1024">1024x1024</option>
+          </select>
+        </label>
+        <br />
+
         <input type="submit" value="Generate Wallpaper" />
       </form>
       {wallpaperUrl && (
